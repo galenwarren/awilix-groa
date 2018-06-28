@@ -1,0 +1,24 @@
+{
+  "name": "awilix-groa",
+  "version": "0.0.1",
+  "description": "Awilix helpers/middleware for Groa",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galenwarren/awilix-groa.git"
+  },
+  "keywords": [
+    "awilix",
+    "groa",
+    "grpc"
+  ],
+  "author": "Galen Warren <galen@cvillewarrens.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/galenwarren/awilix-groa/issues"
+  },
+  "homepage": "https://github.com/galenwarren/awilix-groa#readme"
+}
