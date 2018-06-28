@@ -1,2 +1,2 @@
-# awilix-grpc
-Awilix helpers/middleware for gRPC
+# awilix-groa
+Awilix helpers/middleware for [Groa](https://github.com/GroaJS/groa)
