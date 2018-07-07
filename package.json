@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "coverage": "jest --coverage --no-cache",
     "coverage:watch": "jest --coverage --no-cache --watch",
+    "coverage:coveralls": "jest --coverage --no-cache --coverageReporters=text-lcov | coveralls",
     "build": "BABEL_ENV=build babel $npm_package_directories_src -d $npm_package_directories_dist",
     "semantic-release": "semantic-release",
     "docs": "jsdoc -d $npm_package_directories_docs \"$npm_package_directories_src\""
@@ -54,6 +55,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "commitizen": "^2.10.1",
+    "coveralls": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^1.0.0-rc.12",
     "jest": "^23.3.0",
