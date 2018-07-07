@@ -12,17 +12,23 @@ import {
 
 import { makeInvoker } from './invokers';
 
+/**
+ * The set of http verbs that are supported by awilix-router-core, these
+ * are used below to ignore methods we don't support for grpc
+ * @ignore
+ */
 const httpVerbs = new Set(Object.keys(HttpVerbs).map(v => v.toLowerCase()));
 
 /**
- * registerController - description
+ * Register routes on the provided router, using the state
+ * and target information for a controller
  *
- * @param  {type} router   description
- * @param  {type} { state  description
- * @param  {type} target } description
- * @returns {type}          description
+ * @ignore
+ * @param  {Router} router         The groa router
+ * @param  {Object} stateAndTarget The state and target information
  */
-function registerController(router, { state, target }) {
+function registerController(router, stateAndTarget) {
+	const { state, target } = stateAndTarget;
 	const invoker = makeInvoker(target);
 	const rolledUpState = rollUpState(state);
 	rolledUpState.forEach((methodConfig, methodName) => {
@@ -39,7 +45,12 @@ function registerController(router, { state, target }) {
 	});
 }
 
-// reuse the ALL decorator to indicate an RPC method
+/**
+ * Decorator indicatoring an RPC method
+ * @function
+ * @param 	{String} path 				The route paths
+ * @param		{Function} handler		The route handler
+ */
 export const RPC = ALL;
 
 export function controller(controller) {
