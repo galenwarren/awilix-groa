@@ -7,11 +7,12 @@
     "lint": "npm run lint:specific \"$npm_package_directories_src/**/*.js\"",
     "lint:specific": "prettier-eslint \"$@\" --write",
     "test": "jest",
-    "cz": "git-cz",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage --no-cache",
     "coverage:watch": "jest --coverage --no-cache --watch",
-    "coverage:coveralls": "jest --coverage --no-cache --coverageReporters=text-lcov | coveralls",
+    "coverage:ci": "mkdir -p coverage && jest --coverage --no-cache --ci --coverageReporters=text-lcov > $npm_package_directories_coverage/lcov.info",
+    "coverage:publish": "cat $npm_package_directories_coverage/lcov.info | coveralls",
+    "cz": "git-cz",
     "build": "BABEL_ENV=build babel $npm_package_directories_src -d $npm_package_directories_dist",
     "semantic-release": "semantic-release",
     "docs": "jsdoc -d $npm_package_directories_docs \"$npm_package_directories_src\""
@@ -28,7 +29,8 @@
   "directories": {
     "src": "./src",
     "dist": "./dist",
-    "docs": "./docs"
+    "docs": "./docs",
+    "coverage": "./coverage"
   },
   "keywords": [
     "awilix",
