@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "coverage": "jest --coverage --no-cache",
     "coverage:watch": "jest --coverage --no-cache --watch",
-    "coverage:ci": "jest --coverage --no-cache --ci --coverageReporters=text-lcov > $npm_package_directories_coverage/lcov.info",
+    "coverage:ci": "mkdir -p coverage && jest --coverage --no-cache --ci --coverageReporters=text-lcov > $npm_package_directories_coverage/lcov.info",
     "coverage:publish": "cat $npm_package_directories_coverage/lcov.info | coveralls",
     "cz": "git-cz",
     "build": "BABEL_ENV=build babel $npm_package_directories_src -d $npm_package_directories_dist",

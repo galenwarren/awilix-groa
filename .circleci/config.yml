@@ -10,7 +10,7 @@ jobs:
           command: npm install
       - run:
           name: Test and Validate Coverage
-          command: mkdir -p coverage && npm run coverage:ci
+          command: npm run coverage:ci
       - run:
           name: Publish Coverage
           command: npm run coverage:publish
