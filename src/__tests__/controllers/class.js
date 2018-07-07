@@ -1,4 +1,4 @@
-import { route, RPC, before, after } from '../..';
+import { route, RPC, before, after } from '../../..';
 
 import {
 	beforeMiddleware1,
