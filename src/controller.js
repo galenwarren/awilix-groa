@@ -45,7 +45,6 @@ function registerController(router, stateAndTarget) {
 	});
 }
 
-
 /**
  * Decorator indicatoring an RPC method
  * @function
