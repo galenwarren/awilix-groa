@@ -12,7 +12,8 @@
 		"coverage": "jest --coverage --no-cache",
 		"coverage:watch": "jest --coverage --no-cache --watch",
 		"build": "BABEL_ENV=build babel $npm_package_directories_src -d $npm_package_directories_dist",
-		"semantic-release": "semantic-release"
+		"semantic-release": "semantic-release",
+		"docs": "jsdoc -d docs \"$npm_package_directories_src\""
 	},
 	"repository": {
 		"type": "git",
@@ -51,6 +52,7 @@
 		"babel-preset-env": "^1.7.0",
 		"husky": "^0.14.3",
 		"jest": "^23.3.0",
+		"jsdoc": "^3.5.5",
 		"prettier-eslint-cli": "^4.7.1",
 		"semantic-release": "^15.6.3"
 	}
