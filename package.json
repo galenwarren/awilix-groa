@@ -1,19 +1,21 @@
 {
   "name": "awilix-groa",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "description": "Awilix helpers/middleware for Groa",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src -d dist",
+    "precommit": "lint-staged",
     "lint": "prettier-eslint \"src/**/*.js\" --write",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage --no-cache",
-    "coverage:watch": "jest --coverage --no-cache --watch"
+    "coverage:watch": "jest --coverage --no-cache --watch",
+    "build": "babel src -d dist",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/galenwarren/awilix-groa.git"
+    "url": "https://github.com/galenwarren/awilix-groa.git"
   },
   "keywords": [
     "awilix",
@@ -37,6 +39,7 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "husky": "^0.14.3",
     "jest": "^23.3.0",
     "prettier-eslint-cli": "^4.7.1",
     "semantic-release": "^15.6.3"
