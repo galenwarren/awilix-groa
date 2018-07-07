@@ -6,14 +6,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install
+          name: Install
           command: npm install
       - run:
-          name: test
-          command: npm run coverage:coveralls
+          name: Test and Validate Coverage
+          command: npm run coverage:ci
       - run:
-          name: build
+          name: Publish Coverage
+          command: npm run coverage:publish
+      - run:
+          name: Build
           command: npm run build
       - run:
-          name: release
+          name: Release
           command: npm run semantic-release
