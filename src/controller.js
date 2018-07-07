@@ -7,7 +7,7 @@ import {
 	rollUpState,
 	ALL,
 	createController as createHttpController,
-	HttpVerbs,
+	HttpVerbs
 } from 'awilix-router-core';
 
 import { makeInvoker } from './invokers';
@@ -37,11 +37,11 @@ export const RPC = ALL;
 export function controller(controller) {
 	const router = new Router();
 
-	const controllers = Array.isArray(controller)
-		? controller
-		: [controller];
+	const controllers = Array.isArray(controller) ? controller : [controller];
 
-	controllers.forEach(controller => registerController(router, getStateAndTarget(controller)));
+	controllers.forEach(controller =>
+		registerController(router, getStateAndTarget(controller))
+	);
 
 	return router.routes();
 }
@@ -64,7 +64,7 @@ export function createController(...args) {
 		return function(...args) {
 			const builder = target[targetMethodName || methodName](...args);
 			return new Proxy(builder, handler);
-		}
+		};
 	}
 
 	const handler = {
@@ -87,7 +87,7 @@ export function createController(...args) {
 					}
 			}
 		}
-	}
+	};
 
 	return new Proxy(httpController, handler);
 }

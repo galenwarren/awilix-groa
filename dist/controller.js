@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 exports.RPC = undefined;
 
@@ -25,62 +25,75 @@ var _invokers = require('./invokers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const httpVerbs = new Set(Object.keys(_awilixRouterCore.HttpVerbs).map(v => v.toLowerCase()));
+
 function registerController(router, { state, target }) {
-  const invoker = (0, _invokers.makeInvoker)(target);
-  const rolledUpState = (0, _awilixRouterCore.rollUpState)(state);
-  rolledUpState.forEach((methodConfig, methodName) => {
-    methodConfig.verbs.forEach(verb => {
-      // the verb should always be *
-      if (verb !== '*') {
-        throw new Error(`Expected verb *, found ${verb}`);
-      }
+	const invoker = (0, _invokers.makeInvoker)(target);
+	const rolledUpState = (0, _awilixRouterCore.rollUpState)(state);
+	rolledUpState.forEach((methodConfig, methodName) => {
+		// register the rpc route for each path
+		methodConfig.paths.forEach(path => {
+			const composed = (0, _koaCompose2.default)([...methodConfig.beforeMiddleware, invoker(methodName), ...methodConfig.afterMiddleware]);
 
-      // register the rpc route for each path
-      methodConfig.paths.forEach(path => {
-
-        const composed = (0, _koaCompose2.default)([...methodConfig.beforeMiddleware, invoker(methodName), ...methodConfig.afterMiddleware]);
-
-        router.rpc(path, composed);
-      });
-    });
-  });
+			router.rpc(path, composed);
+		});
+	});
 }
 
 // reuse the ALL decorator to indicate an RPC method
 const RPC = exports.RPC = _awilixRouterCore.ALL;
 
-function controller(controllerClass) {
-  const router = new _groaRouter2.default();
+function controller(controller) {
+	const router = new _groaRouter2.default();
 
-  const controllerClasses = Array.isArray(controllerClass) ? controllerClass : [controllerClass];
+	const controllers = Array.isArray(controller) ? controller : [controller];
 
-  controllerClasses.forEach(controllerClass => registerController(router, getStateAndTarget(controllerClass)));
+	controllers.forEach(controller => registerController(router, (0, _awilixRouterCore.getStateAndTarget)(controller)));
+
+	return router.routes();
 }
 
 function loadControllers(pattern, opts) {
-  const router = new _groaRouter2.default();
+	const router = new _groaRouter2.default();
 
-  (0, _awilixRouterCore.findControllers)(pattern, _extends({}, opts, {
-    absolute: true
-  })).forEach(stateAndTarget => registerController(router, stateAndTarget));
+	(0, _awilixRouterCore.findControllers)(pattern, _extends({}, opts, {
+		absolute: true
+	})).forEach(stateAndTarget => registerController(router, stateAndTarget));
 
-  return router.routes();
+	return router.routes();
 }
 
 function createController(...args) {
-  const httpController = (0, _awilixRouterCore.createController)(...args);
+	const httpController = (0, _awilixRouterCore.createController)(...args);
 
-  function createMethod(name) {
-    return function (...args) {
-      httpController[name](...args);
-      return this;
-    };
-  }
+	function createBuilderMethod(target, methodName, targetMethodName) {
+		return function (...args) {
+			const builder = target[targetMethodName || methodName](...args);
+			return new Proxy(builder, handler);
+		};
+	}
 
-  return {
-    rpc: createMethod('all'),
-    prefix: createMethod('prefix'),
-    before: createMethod('before'),
-    after: createMethod('after')
-  };
+	const handler = {
+		get(target, propKey) {
+			switch (propKey) {
+				case 'rpc':
+					// map rpc to all, via proxy
+					return createBuilderMethod(target, propKey, 'all');
+				case 'prefix':
+				case 'before':
+				case 'after':
+					// expose these methods, via proxy
+					return createBuilderMethod(target, propKey);
+				default:
+					if (httpVerbs.has(propKey)) {
+						// hide the builder methods that are http specific
+						return null;
+					} else {
+						return target[propKey];
+					}
+			}
+		}
+	};
+
+	return new Proxy(httpController, handler);
 }

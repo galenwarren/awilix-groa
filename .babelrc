@@ -1,19 +1,18 @@
 {
-  "plugins": [
-    "transform-object-rest-spread",
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        "transform-decorators-legacy"
-      ]
-    }
-  },
-  "presets": [
-    ["env", {
-      "targets": {
-        "node": "6.10"
-      }
-    }],
-  ]
+	plugins: ['transform-object-rest-spread', 'transform-decorators-legacy'],
+	env: {
+		build: {
+			ignore: ['src/__tests__/']
+		}
+	},
+	presets: [
+		[
+			'env',
+			{
+				targets: {
+					node: '8.9'
+				}
+			}
+		]
+	]
 }
