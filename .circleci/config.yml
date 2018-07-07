@@ -16,4 +16,4 @@ jobs:
           command: npm run build
       - run:
           name: release
-          command: echo 'Skipping release' # npm run semantic-release || true
+          command: npm run semantic-release
