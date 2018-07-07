@@ -21,7 +21,7 @@
     "grpc"
   ],
   "author": "Galen Warren <galen@cvillewarrens.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/galenwarren/awilix-groa/issues"
   },
